@@ -17,41 +17,45 @@ import numpy as np
 from sklearn import preprocessing, cross_validation, neighbors
 import pandas as pd
 
-df = pd.read_csv('data/breast-cancer-wisconsin.data.txt')
+accuracies = []
+for i in range(25):
+    df = pd.read_csv('data/breast-cancer-wisconsin.data.txt')
 
-# replace missing data as an outlier
-# good practice
-# df.dropna(inplace=True)
-df.replace('?', -99999, inplace=True)
+    # replace missing data as an outlier
+    # good practice
+    # df.dropna(inplace=True)
+    df.replace('?', -99999, inplace=True)
 
-# drop not-needed column(s)
-# to increase the credibility of the model 
-df.drop(['id'], 1, inplace=True)
+    # drop not-needed column(s)
+    # to increase the credibility of the model 
+    df.drop(['id'], 1, inplace=True)
 
-# define X and y
-X = np.array(df.drop(['class'], 1))
-y = np.array(df['class'])
+    # define X and y
+    X = np.array(df.drop(['class'], 1))
+    y = np.array(df['class'])
 
-# train and test 
-X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_size=0.2)
+    # train and test 
+    X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_size=0.2)
 
-# define classifier
+    # define classifier
 
-clf = neighbors.KNeighborsClassifier()
-clf.fit(X_train, y_train)
+    clf = neighbors.KNeighborsClassifier(n_jobs=-1)
+    clf.fit(X_train, y_train)
 
-# test the accuracy 
-accuracy = clf.score(X_test, y_test)
-print('the accuracy is %s' % accuracy)
+    # test the accuracy 
+    accuracy = clf.score(X_test, y_test)
+    print('the accuracy is %s' % accuracy)
 
-# make a prediction
-# you can pickle the model if the data was a large 
-# make up numbers 
-example_measures = np.array(([4,2,1,1,1,2,3,2,1], [2,3,2,1,4,2,7,2,1]))
+    # make a prediction
+    # you can pickle the model if the data was a large 
+    # make up numbers 
+    example_measures = np.array(([4,2,1,1,1,2,3,2,1], [2,3,2,1,4,2,7,2,1]))
 
 
-example_measures = example_measures.reshape(len(example_measures),-1)
+    example_measures = example_measures.reshape(len(example_measures),-1)
 
-prediction = clf.predict(example_measures)
-print(prediction)
+    prediction = clf.predict(example_measures)
+    print(prediction)
+    accuracies.append(accuracy)
+print(sum(accuracies)/len(accuracies))
 
