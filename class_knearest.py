@@ -37,7 +37,7 @@ for i in range(25):
     # train and test 
     X_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_size=0.2)
 
-    # define classifier
+    # define classifier here
 
     clf = neighbors.KNeighborsClassifier(n_jobs=-1)
     clf.fit(X_train, y_train)
