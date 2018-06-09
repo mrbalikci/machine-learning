@@ -26,6 +26,7 @@ def best_fit_slope_intercept(xs, ys):
            ((mean(xs)**2) - mean(xs**2) ))
     
     b = mean(ys) - m*mean(xs)
+    
     return m, b
 
 m, b= best_fit_slope_intercept(xs, ys)
