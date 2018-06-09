@@ -40,10 +40,11 @@ for i in range(25):
     # make sure everything is float -- just in case 
     full_data = df.astype(float).values.tolist()
 
-    # print first 10 rows 
+    # print first 10 rows
     # print(full_data[:10])
 
     # shuffle the data with random
+    
     random.shuffle(full_data)
 
     # slice the data for test and train
